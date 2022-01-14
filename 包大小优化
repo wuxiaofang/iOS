@@ -25,6 +25,22 @@
 关于无用类的检查：
 只要是通过RealizeClass中的flag来检查，每个类在第一次被调用的时候，会被懒加载，这是 flag会被标识为初始化状态，通过在合适的时机检查flag就能得出哪些类被调用了
 再结合之前的统计数据就可以统计出来业务方的哪些类没被调用
+#import <objc/objc.h>
+#import <stdint.h>
+
+#import <dlfcn.h>
+#import <mach-o/getsect.h>
+void reportClassFunction(){
+    Dl_info info;
+    dladdr((const void*)&reportClassFunction, &info);
+    const uint64_t mach_header = (uint64_t)info.dli_fbase;
+    const struct section_64 *section = getsectbynamefromheader_64((const struct mach_header_64*)mach_header, "__DATA", "__objc_classlist");
+    for(uint64_t address = section->offset; address < section->offset + section->size; address+= sizeof(const char**)){
+        Class cls = (__bridge  Class)(*(void**)(mach_header + address));
+        NSLog(@"sssss");
+    }
+    
+}
 
 Mach-o文件的合并：
 参考https://mp.weixin.qq.com/s?__biz=MzUxMzcxMzE5Ng==&mid=2247488473&idx=1&sn=c4db1f3256ffcf3e372cebb4f97b89b4&source=41#wechat_redirect 这篇文章
