@@ -16,3 +16,25 @@ i/o的探索：资源预加载、二进制重排
 手动插桩、PGO、 Clang sanitizerCoverage、静态库插桩、HHVM
 手动插桩、静态库插桩、HHVM    开发成本高
 PGO  不能自动化
+
+
+
+手动插桩：
+替换Mach-o中的objc——msgsender方法统计
+通过地址的偏移
+
+静态库插桩：
+
+PGO
+对内联处理的比较好
+
+Clang sanitizerCoverage. 
+
+AppOrderFiles
+
+1.1 -》 800+ms
+
+HHVM：
+暂时没了解
+
+
