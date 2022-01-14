@@ -12,3 +12,7 @@ tp90    3.8-4.4
 caesium慢方法、启动任务管控、主线程阻塞态
 
 i/o的探索：资源预加载、二进制重排
+
+手动插桩、PGO、 Clang sanitizerCoverage、静态库插桩、HHVM
+手动插桩、静态库插桩、HHVM    开发成本高
+PGO  不能自动化
