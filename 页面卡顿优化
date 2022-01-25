@@ -1,1 +1,44 @@
 
+
+参考：https://zhuanlan.zhihu.com/p/72653360
+界面的流程本质：
+做到cpu和gpu的平衡， frame buffer的更新频率和契合上，不会在成卡帧
+
+离屏渲染：
+图层渲染到画布之后就删除了，导致GPU无法拿到图层进行圆角的切割，这时候就需要单独开辟一块内存空间，吧图层渲染到内存中进行圆角切割，完成之后再同步到frame buffer中
+
+
+离屏渲染：
+
+CPU、GPU离屏渲染
+
+CPU触发：
+1、drawRect 、shouldRasterize
+会在cpu侧计算生成bitmap，存储到 新开辟的内存中，渲染时直接读取，这个并不会影响系统的性能
+
+可以在子线程生成bitmap最后同步到主线程中，
+
+
+
+空间 换时间
+
+GPU触发：  （又叫软件渲染）
+本质是只要发生图层的重叠计算就会触发离屏渲染
+
+产生的条件
+设置圆角 + 裁剪 （不一定会发生离屏渲染，看情况）
+阴影   一定
+mask  一定
+group opacity  一定
+shouldRasterize（光栅化） 
+把一些不长变化的layer可以开启，render service绘制缓存到内存中，下次render的时候可以直接复用
+
+解决办法：
+可以自己绘制，调用CoreGraphics 绘制操作
+
+卡顿监控：
+1、人工：看instrument
+2、代码监控：
+
+
+
