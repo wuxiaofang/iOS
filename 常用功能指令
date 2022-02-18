@@ -1,0 +1,2 @@
+rebase次数指令    xcrun dyldinfo -rebase XXXX.app/XXXX | wc -l 
+ 
